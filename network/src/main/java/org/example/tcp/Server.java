@@ -1,7 +1,8 @@
 package org.example.tcp;
 
 import java.io.*;
-import java.net.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 public class Server {
@@ -9,7 +10,7 @@ public class Server {
         ServerSocket ss = new ServerSocket(6666);
         System.out.println("Server is running...");
 
-        for(;;) {
+        for (; ; ) {
             Socket sock = ss.accept();
             System.out.println("Connection from " + sock.getRemoteSocketAddress());
             Thread t = new Handler(sock);
@@ -28,13 +29,14 @@ class Handler extends Thread {
     @Override
     public void run() {
         try (InputStream input = this.sock.getInputStream()) {
-            try(OutputStream output = this.sock.getOutputStream()) {
+            try (OutputStream output = this.sock.getOutputStream()) {
                 handler(input, output);
             }
         } catch (Exception e) {
             try {
                 this.sock.close();
-            } catch (IOException ioe) {}
+            } catch (IOException ioe) {
+            }
             System.out.println("Client disconnected.");
         }
     }
@@ -44,9 +46,9 @@ class Handler extends Thread {
         var reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
         writer.write("Hello!\n");
         writer.flush();
-        for (;;) {
+        for (; ; ) {
             String s = reader.readLine();
-            if(s.equals("exit")) {
+            if (s.equals("exit")) {
                 writer.write("exit\n");
                 writer.flush();
                 break;

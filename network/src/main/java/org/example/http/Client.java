@@ -1,11 +1,14 @@
 package org.example.http;
 
 import java.io.InputStream;
-import java.net.*;
-import java.net.http.*;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 public class Client {
     static HttpClient client = HttpClient.newBuilder().build();
