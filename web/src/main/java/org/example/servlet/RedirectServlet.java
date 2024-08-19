@@ -12,7 +12,7 @@ import java.io.IOException;
 public class RedirectServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String name = req.getParameter("name");
-        String redirectUrl = "/" + (name == null ? "" : "?name=" + name);
+        String redirectUrl = "/hello" + (name == null ? "" : "?name=" + name);
 
         // 永久重定向，只需执行以下代码，不再需要 sendRedirect
         // resp.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
